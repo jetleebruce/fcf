@@ -1,27 +1,58 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import FormControl from "@material-ui/core/FormControl";
+import { Button, InputLabel, Input } from "@material-ui/core";
+import Message from "./Message";
 import "./App.css";
 
 function App() {
   const [input, setInput] = useState("");
-  const [messages, setMessages] = useState(["hello", "whats up", "here i am"]);
-  console.log(input);
-  console.log(messages);
+  const [messages, setMessages] = useState([
+    { username: "Leo", text: "Hey hoo!!" },
+    { username: "Leo", text: "Hey hoo!!" },
+  ]);
+  const [username, setUsername] = useState("");
+
+  //useState = variables in REACT
+  //useEffect = run code on a condition
+
+  useEffect(() => {
+    setUsername(prompt("Enter your name"));
+    //run code
+    //if [] is empty, this code run once when the app component loads
+  }, []); //condition
+
   const sendMessage = (event) => {
     event.preventDefault();
 
-    setMessages([...messages, input]);
+    setMessages([...messages, { username: username, text: input }]);
     setInput("");
   };
   return (
     <div className='App'>
       <h1>Hey Modin</h1>
-      <input value={input} onChange={(event) => setInput(event.target.value)} />
-      <button onClick={sendMessage}>Send Message</button>
-      {
-        messages.map(message => (
-          <p>{message}</p>
-        ))
-      }
+      <h3>Welcome {username}</h3>
+      <form>
+        <FormControl>
+          <InputLabel>Enter your message ...</InputLabel>
+          <Input
+            value={input}
+            onChange={(event) => setInput(event.target.value)}
+          />
+          <Button
+            disabled={!input}
+            type='submit'
+            variant='contained'
+            color='primary'
+            onClick={sendMessage}
+          >
+            Send Message
+          </Button>
+        </FormControl>
+      </form>
+
+      {messages.map((message) => (
+        <Message username={message.username} text={message.text} />
+      ))}
     </div>
   );
 }
