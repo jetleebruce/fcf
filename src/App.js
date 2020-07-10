@@ -7,8 +7,8 @@ import "./App.css";
 function App() {
   const [input, setInput] = useState("");
   const [messages, setMessages] = useState([
-    { username: "Leo", text: "Hey hoo!!" },
-    { username: "Leo", text: "Hey hoo!!" },
+    { username: "Leo", message: "Hey hoo!!" },
+    { username: "Leo", message: "Hey hoo!!" },
   ]);
   const [username, setUsername] = useState("");
 
@@ -24,7 +24,7 @@ function App() {
   const sendMessage = (event) => {
     event.preventDefault();
 
-    setMessages([...messages, { username: username, text: input }]);
+    setMessages([...messages, { username: username, message: input }]);
     setInput("");
   };
   return (
@@ -51,7 +51,7 @@ function App() {
       </form>
 
       {messages.map((message) => (
-        <Message username={message.username} text={message.text} />
+        <Message username={username} message={message} />
       ))}
     </div>
   );
